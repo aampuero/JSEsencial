@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Curso JS Esencial</title>
+    </head>
+    <body>
+        <h1>JavaScript Esencial</h1>
+        <p>
+            <button onclick="curso.listar()">Lista de estudiantes</button>
+            <button onclick="curso.promedio()">Nota promedio</button>
+            <button onclick="curso.mayor()">Mayor nota</button>
+            <button onclick="curso.menor()">Menor nota</button>
+        </p>
+        <div id="resultado"></div>
+    </body>
+    <script>
+     var curso = new Curso( 'resultado' );
+
+     curso.agregar( 'PVH617535001', 'Pedro Vasquez Hernandez',        78 );
+     curso.agregar( 'AGC610098001', 'Gary Sofia Galindo Camacho',       71 );
+     curso.agregar( 'MCO710151001', 'María Camila Osorio Morales',      65 );
+     curso.agregar( 'ATA610078001', 'Annibal Tobón Arenas',               33 );
+     curso.agregar( 'JZH410303001', 'Jessica Zapata Hernandez',       86 );
+     curso.agregar( 'EJE527520001', 'Elizabeth Jaramillo Escobar',         63 );
+     curso.agregar( 'JMF517518002', 'Josie Muñoz Freydell',              86 );
+     curso.agregar( 'MVV620049002', 'Miriam Alejandra Villegas Vivares', 30 );
+     curso.agregar( 'KLG620006003', 'Katherine Lopez Giraldo',           82 );
+     curso.agregar( 'AGR320008004', 'Alessandro Gallego Roldan',            30 );
+
+     function Curso( elementoSalida ) {
+         this.lista = [];
+         this.resultado = document.getElementById( elementoSalida );
+
+         this.agregar = function( codigo, nombre, nota ) {
+             this.lista.push( new Estudiante( codigo, nombre, nota ) );
+         }
+
+         this.listar = function() {
+             this.mostrar( this.lista, 'Lista de todos los estudiantes' );
+         }
+
+         this.promedio = function() {
+             var suma = 0;
+             for ( var i = 0; i < this.lista.length; i++ ) {
+                 suma += this.lista[i].nota;
+             }
+             var promedio = suma / this.lista.length;
+             this.resultado.innerHTML = 'Promedio: ' + promedio;
+         }
+
+         this.mayor = function() {
+             this.resultado.innerHTML = 'Mayor nota: ' + this.mayorNota();
+         }
+
+         this.mayorNota = function() {
+             var mayor = null;
+             for ( var i = 0; i < this.lista.length; i++ ) {
+                 if ( mayor == null || this.lista[i].nota > mayor )
+                     mayor = this.lista[i].nota;
+             }
+             return mayor;
+         }
+
+         this.menor = function() {
+             this.resultado.innerHTML = 'Menor nota: ' + this.menorNota();
+         }
+
+         this.menorNota = function() {
+             var menor = null;
+             for ( var i = 0; i < this.lista.length; i++ ) {
+                 if ( menor == null || this.lista[i].nota < menor )
+                     menor = this.lista[i].nota;
+             }
+             return menor;
+         }
+
+         this.mostrar = function( laLista, titulo ) {
+             var salida = '<h2>' + titulo + '</h2>'
+                        + '<table border="1">'
+                        + '<tr><th>Código</th><th>Nombre</th><th>Nota</th></tr>';
+             for ( var i = 0; i < laLista.length; i++ ) {
+                 salida += '<tr>'
+                         + '<td>' + laLista[i].codigo + '</td>'
+                         + '<td>' + laLista[i].nombre + '</td>'
+                         + '<td align="right">' + laLista[i].nota + '</td>'
+                         + '</tr>';
+             }
+             salida += '</table>'
+             this.resultado.innerHTML = salida;
+         }
+
+         
+     }
+
+     function Estudiante( codigo, nombre, nota ) {
+         this.codigo = codigo;
+         this.nombre = nombre;
+         this.nota   = nota;
+     } // Fin del objeto Estudiante
+     
+    </script>
+</html>
+
